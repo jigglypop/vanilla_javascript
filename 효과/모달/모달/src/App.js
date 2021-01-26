@@ -6,13 +6,13 @@ export default class App {
   dashboard = null;
   constructor($target) {
     this.$target = $target;
-
     // 인스턴스
     const btn = new BlueButton({
       $target,
-      text: "반갑습니다 버튼",
+      text: "모달",
       onAction: () => {
-        console.log("헬로우");
+        const modal = document.querySelector(".modal-container");
+        modal.classList.toggle("hidden");
       },
     });
 

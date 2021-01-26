@@ -24,3 +24,7 @@ h5 {
 body {
   font-family: "Noto Sans KR", sans-serif;
 }
+
+.hidden {
+  visibility: hidden;
+}
