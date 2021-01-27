@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR&family=Open+Sans&display=swap");
+
+:root {
+  --color-mode: "light";
+  --color-dark: black;
+  --color-light: white;
+  --background: white;
+  --text-color: black;
+}
+
+#App {
+  margin: 1.5em auto;
+  /* max-width: 1200px; */
+}
+
+body {
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+.hidden {
+  visibility: hidden;
+}

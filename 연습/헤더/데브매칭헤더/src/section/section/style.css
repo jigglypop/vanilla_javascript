@@ -1,0 +1,16 @@
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.content h2,
+.content h3 {
+  font-size: 150%;
+  margin: 20px 0;
+}
+
+.content p {
+  color: #555;
+  line-height: 30px;
+  letter-spacing: 1.2px;
+}
