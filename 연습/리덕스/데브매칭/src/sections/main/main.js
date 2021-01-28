@@ -1,4 +1,4 @@
-import { createStore } from "../../redux/redux.js";
+import { createStore } from "../../ngrx/store.js";
 import StyleSheets from "../../util/stylesheets.js";
 
 export default class MainSection {
@@ -10,27 +10,30 @@ export default class MainSection {
     // 스토어
     const store = createStore();
 
-    // 버튼
-    const btn = document.createElement("button");
-    btn.innerText = "+1";
-    btn.addEventListener("click", () => {
-      store.dispatch({ type: "next" });
+    // 플러스 버튼
+    const Plus = document.createElement("button");
+    Plus.innerText = "+1";
+    Plus.addEventListener("click", () => {
+      store.dispatch({ type: "plus" });
     });
+    this.mainContainer.appendChild(Plus);
 
-    this.mainContainer.appendChild(btn);
+    // 마이너스 버튼
+    const Minus = document.createElement("button");
+    Minus.innerText = "-1";
+    Minus.addEventListener("click", () => {
+      store.dispatch({ type: "minus" });
+    });
+    this.mainContainer.appendChild(Minus);
+
     $target.appendChild(this.mainContainer);
-
     // 렌더링 보일러플레이트
     this.renderContainer = document.createElement("div");
     this.mainContainer.appendChild(this.renderContainer);
-    const rendering = () => {
+
+    store.subscribe(() => {
       this.state = store.getState();
       this.render();
-    };
-
-    rendering();
-    store.subscribe(() => {
-      rendering();
     });
   }
 
@@ -41,6 +44,7 @@ export default class MainSection {
 
   // 렌더링
   render() {
+    console.log(this.state);
     this.renderContainer.innerHTML = "";
     const h1 = document.createElement("h1");
     h1.innerText = `${this.state.age}`;
