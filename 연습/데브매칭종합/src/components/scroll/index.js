@@ -63,7 +63,6 @@ export default class Scroll extends NgComponent {
   // 렌더링
   render() {
     this.clear(this.outer, "src/components/scroll");
-    // 시작
     this.data.map((item) => {
       new Card({
         $target: this.outer,
@@ -71,7 +70,6 @@ export default class Scroll extends NgComponent {
       });
     });
     const cards = document.querySelectorAll(".card-container");
-    console.log(cards.length);
     cards.forEach((entry) => observer.observe(entry));
   }
 }

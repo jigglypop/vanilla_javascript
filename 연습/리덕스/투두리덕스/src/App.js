@@ -1,5 +1,5 @@
-import HeaderSection from "./sections/header/header.js";
-import MainSection from "./sections/main/main.js";
+import HeaderSection from "./sections/header/index.js";
+import MainSection from "./sections/main/index.js";
 import { GetLocal } from "./util/localStorage.js";
 
 export default class App {
@@ -19,7 +19,6 @@ export default class App {
     // 메인
     new MainSection({
       $target,
-      items: this.items,
     });
 
     this.dashboard = $target;

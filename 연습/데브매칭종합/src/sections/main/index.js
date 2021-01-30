@@ -1,3 +1,4 @@
+import Modal from "../../components/modal/index.js";
 import Scroll from "../../components/scroll/index.js";
 import NgComponent from "../../util/NgComponent.js";
 
@@ -27,6 +28,9 @@ export default class MainSection extends NgComponent {
     new Scroll({
       $target: this.outer,
       data: this.data,
+    });
+    const modal = new Modal({
+      $target: this.outer,
     });
   }
 

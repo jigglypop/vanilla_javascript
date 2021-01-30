@@ -33,7 +33,7 @@ export default class NgComponent {
     return renderContainer;
   }
 
-  // 아우터 클리어, html/css 재삽입
+  // 아우터 클리어
   clear(outer, URL) {
     outer.innerHTML = "";
     // xml으로 index.html 받아와서 innerHTML에 붙이기
@@ -85,7 +85,7 @@ export default class NgComponent {
   MakeInput($target, onChange, text, className) {
     const el = document.createElement("input");
     // 바꾸기 이벤트 달기
-    el.addEventListener("change", onChange);
+    el.addEventListener("input", onChange);
     if (text) el.innerText = text;
     if (className) el.className = className;
     $target.appendChild(el);
