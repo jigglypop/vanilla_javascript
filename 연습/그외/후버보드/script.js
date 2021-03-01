@@ -1,6 +1,6 @@
-const container = document.getElementById("container");
+const container = document.getElementById("main-container");
 var colors = ["#e74c3c", "#8e44ad", "#3498db", "#e67e22", "#2ecc71"];
-const SQUARES = 500;
+const SQUARES = 1000;
 
 // 랜덤
 const getRandom = (objects) => {

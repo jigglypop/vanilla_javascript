@@ -1,0 +1,55 @@
+import styled from 'styled-components'
+
+
+const InSectionDiv = styled.div`
+  display:flex;
+  justify-content:center;
+  align-items:center;
+`
+
+const MainH1 = styled.h1`
+  position: absolute;
+  margin-top: 200px;
+  font-size: 150px;
+  font-weight:800;
+`
+
+
+const ClipText = styled.div`
+  font-size: 200px;
+  position: relative;
+  width: 1000px;
+  height: 500px;
+  color: #fff;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-image : ${props => props.image};
+  background-repeat: no-repeat;
+  -webkit-background-size: cover;
+  background-size: cover;
+  background-position: 50% 50%;
+
+  &:before {
+    position: absolute;
+    content: "";
+    z-index: -2;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: inherit;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+  &:after {
+    position: absolute;
+    content: "";
+    z-index: -1;
+    top: 0.125em;
+    right: 0.125em;
+    bottom: 0.125em;
+    left: 0.125em;
+    background-color: #000;
+  }
+`

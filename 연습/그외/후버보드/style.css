@@ -14,12 +14,14 @@ body {
   margin: 0;
 }
 
-.container {
+.main-container {
+  background-image: url("./main.png");
+  background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 400px;
+  max-width: 1000px;
 }
 
 .square {

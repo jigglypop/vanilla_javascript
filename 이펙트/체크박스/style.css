@@ -37,9 +37,9 @@ body {
   height: 40px;
 }
 
-.toggle:checked + .label {
+/* .toggle:checked + .label {
   background-color: #8e44ad;
-}
+} */
 
 .ball {
   background: #fff;
@@ -51,19 +51,16 @@ body {
   left: 3px;
   align-items: center;
   justify-content: center;
-  animation: slideOff 0.3s linear forwards;
+  animation: slideOff 0.1s linear forwards;
 }
 
 .toggle:checked + .label .ball {
-  animation: slideOn 0.3s linear forwards;
+  animation: slideOn 0.1s linear forwards;
 }
 
 @keyframes slideOn {
   0% {
     transform: translateX(0) scale(1);
-  }
-  50% {
-    transform: translateX(20px) scale(1.2);
   }
   100% {
     transform: translateX(40px) scale(1);
@@ -73,9 +70,6 @@ body {
 @keyframes slideOff {
   0% {
     transform: translateX(40px) scale(1);
-  }
-  50% {
-    transform: translateX(20px) scale(1.2);
   }
   100% {
     transform: translateX(0) scale(1);
