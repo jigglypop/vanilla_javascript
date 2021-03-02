@@ -31,6 +31,17 @@ export default class App {
         }
         this.spinner.toggle();
       },
+
+      onRandom: async () => {
+        this.spinner.toggle();
+        const res = await api.fetchRandoms();
+        if (!res.isError) {
+          this.setState(res.data);
+        } else {
+          this.setError(res.data);
+        }
+        this.spinner.toggle();
+      },
     });
     // 태그
     this.tags = new Tags({

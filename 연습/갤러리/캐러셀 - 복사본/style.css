@@ -9,12 +9,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100vh;
+  margin: 0;
 }
 
 img {
-  display: inline-block;
-  width: 100px;
-  height: 100px;
+  width: 500px;
+  height: 500px;
   object-fit: cover;
 }
 
@@ -26,14 +27,18 @@ img {
 
 .carousel {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  height: 530px;
   width: 500px;
   overflow: hidden;
 }
 
 .btn {
+  background-color: #1d1d1d;
+  color: #fff;
   border: none;
   padding: 0.5rem;
   cursor: pointer;
+  width: 49.5%;
 }
 
 .btn:hover {

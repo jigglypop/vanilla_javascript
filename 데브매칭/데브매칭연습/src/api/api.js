@@ -50,5 +50,20 @@ const api = {
       };
     }
   },
+
+  fetchRandoms: async () => {
+    try {
+      const res = await fetchData(`${API_ENDPOINT}/api/cats/random50`);
+      return {
+        isError: false,
+        data: res.data,
+      };
+    } catch (e) {
+      return {
+        isError: true,
+        data: e,
+      };
+    }
+  },
 };
 export default api;
