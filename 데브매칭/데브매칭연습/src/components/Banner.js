@@ -17,6 +17,7 @@ export default class Banner {
   }
 
   render() {
+    this.$outer.innerHTML = "";
     const imgsContainer = document.createElement("div");
     imgsContainer.className = "imgs-container";
     imgsContainer.innerHTML = this.data

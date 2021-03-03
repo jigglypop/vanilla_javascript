@@ -16,7 +16,6 @@ async function getPosts() {
 
 async function showPosts() {
   const posts = await getPosts();
-  console.log(posts);
   posts.forEach((post) => {
     const postEl = document.createElement("div");
     postEl.classList.add("post");

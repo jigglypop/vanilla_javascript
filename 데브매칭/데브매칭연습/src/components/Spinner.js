@@ -7,11 +7,6 @@ export default class Spinner {
     $target.appendChild(this.$spinner);
     this.render();
   }
-
-  toggle() {
-    this.$spinner.classList.toggle("isvisible");
-  }
-
   render() {
     this.$spinner.classList.add("isvisible");
     this.$spinner.innerHTML = `
