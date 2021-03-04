@@ -30,7 +30,7 @@ export default class App {
         this.tags.setTags(keyword);
         const res = await api.fetchCats(keyword);
         if (!res.isError) {
-          this.setState(res.data);
+          this.setSearchData(res.data);
         } else {
           this.setError(res.data);
         }
@@ -55,6 +55,16 @@ export default class App {
     // 태그
     this.tags = new Tags({
       $target,
+      onClickTag: async (keyword) => {
+        spinnerToggle();
+        const res = await api.fetchCats(keyword);
+        if (!res.isError) {
+          this.setSearchData(res.data);
+        } else {
+          this.setError(res.data);
+        }
+        spinnerToggle();
+      },
     });
     // 배너
     this.banner = new Banner({
@@ -72,37 +82,43 @@ export default class App {
     });
     // 결과리스트
     const throttle = throttling();
+    const scroll = () => {
+      const {
+        scrollTop,
+        scrollHeight,
+        clientHeight,
+      } = document.documentElement;
+      if (scrollTop + clientHeight >= scrollHeight - 500) {
+        throttle.throttle(async () => {
+          spinnerToggle();
+          this.setDummy();
+          const res = await api.fetchRandoms();
+          if (!res.isError) {
+            this.setScroll(res.data);
+          } else {
+            this.setError(res.data);
+          }
+          this.setDummy();
+          spinnerToggle();
+        });
+      }
+    };
+
     this.searchResult = new SearchResult({
       $target,
       initialData: this.data,
-      onClick: (image) => {
+      onClick: (data) => {
         this.imageInfo.setState({
           visible: true,
-          image,
+          data,
         });
       },
-      onScroll: async () => {
-        window.addEventListener("scroll", () => {
-          const {
-            scrollTop,
-            scrollHeight,
-            clientHeight,
-          } = document.documentElement;
-          if (scrollTop + clientHeight >= scrollHeight - 500) {
-            throttle.throttle(async () => {
-              spinnerToggle();
-              this.setDummy();
-              const res = await api.fetchRandoms();
-              if (!res.isError) {
-                this.setScroll(res.data);
-              } else {
-                this.setError(res.data);
-              }
-              this.setDummy();
-              spinnerToggle();
-            });
-          }
-        });
+      onScroll: async (isRandom) => {
+        if (isRandom) {
+          window.addEventListener("scroll", scroll);
+        } else {
+          window.removeEventListener("scroll", scroll);
+        }
       },
     });
     // 모달
@@ -119,6 +135,11 @@ export default class App {
     this.data = nextData;
     this.banner.setState(nextData);
     this.searchResult.setState(nextData);
+  }
+
+  setSearchData(data) {
+    this.banner.setState(data);
+    this.searchResult.setSearchData(data);
   }
 
   setScroll(data) {

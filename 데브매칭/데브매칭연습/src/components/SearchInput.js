@@ -1,5 +1,3 @@
-const TEMPLATE = '<input type="text">';
-
 export default class SearchInput {
   constructor({ $target, onSearch, onRandom }) {
     const $searchInput = document.createElement("section");
@@ -21,8 +19,11 @@ export default class SearchInput {
     const searchinput = document.querySelector(".SearchInput");
     searchinput.focus();
     this.$searchInput.addEventListener("keyup", (e) => {
-      if (e.keyCode === 13) {
-        this.onSearch(e.target.value);
+      if (e.target.value !== "") {
+        if (e.keyCode === 13) {
+          this.onSearch(e.target.value);
+          e.target.value = "";
+        }
       }
     });
 

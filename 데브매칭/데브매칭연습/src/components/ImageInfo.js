@@ -12,6 +12,7 @@ export default class ImageInfo {
     $imageInfo.className = "ImageInfo";
     $imageInfo.id = "image-info";
     this.$imageInfo = $imageInfo;
+
     $target.appendChild($imageInfo);
     this.data = data;
     this.render();
@@ -26,10 +27,10 @@ export default class ImageInfo {
     }
   }
 
-  async setState(nextData) {
+  async setState(data) {
     spinnerToggle();
-    this.data = nextData;
-    await this.onCatById(this.data.image.id);
+    this.data = data;
+    await this.onCatById(this.data.data);
     spinnerToggle();
     this.render();
   }
@@ -53,14 +54,13 @@ export default class ImageInfo {
   render() {
     if (this.data.visible) {
       this.fadeIn();
-      const { name, url } = this.data.image;
       this.$imageInfo.innerHTML = `
         <div class="content-wrapper">
           <div class="title">
-            <span>${name}</span>
+            <span>${this.catdata.name}</span>
             <div class="close">x</div>
           </div>
-          <img src="${url}" alt="${name}"/>        
+          <img src="${this.catdata.url}" alt="${this.catdata.name}"/>        
           <div class="description">
             <div>성격: ${this.catdata.temperament}</div>
             <div>태생: ${this.catdata.origin}</div>

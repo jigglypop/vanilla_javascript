@@ -2,7 +2,7 @@ export default class SearchResult {
   $searchResult = null;
   $dummy = null;
   data = null;
-  searchData = null;
+  isRandom = true;
   error = null;
   onClick = null;
   onScroll = null;
@@ -10,6 +10,10 @@ export default class SearchResult {
   constructor({ $target, initialData, onClick, onScroll }) {
     this.$searchResult = document.createElement("div");
     this.$searchResult.className = "SearchResult";
+
+    this.$searchResult.addEventListener("click", (e) => {
+      this.onClick(e.target.id);
+    });
 
     this.$dummy = document.createElement("div");
     this.$dummy.classList.add("isvisible");
@@ -20,12 +24,11 @@ export default class SearchResult {
     this.data = initialData;
     this.onClick = onClick;
     this.onScroll = onScroll;
-    this.onScroll();
     this.render();
   }
 
   setState(nextData) {
-    this.searchData = null;
+    this.isRandom = true;
     this.data = nextData;
     this.error = null;
     this.render();
@@ -37,9 +40,9 @@ export default class SearchResult {
     this.render();
   }
 
-  setSearchData(data) {
-    this.data = null;
-    this.searchData = data;
+  setSearchData(nextData) {
+    this.isRandom = false;
+    this.data = nextData;
     this.error = null;
     this.render();
   }
@@ -51,65 +54,54 @@ export default class SearchResult {
 
   render() {
     if (this.data) {
-      if ("IntersectionObserver" in window) {
-        const lazyimage = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const outer = entry.target;
-              const img = outer.querySelector("img");
-              const src = img.getAttribute("lazy");
-              img.setAttribute("src", src);
-              lazyimage.unobserve(outer);
-            }
+      this.onScroll(this.isRandom);
+      if (!this.isRandom && this.data.length === 0) {
+        this.$searchResult.innerHTML = `<h1>검색 결과가 없습니다</h1>`;
+        return;
+      } else {
+        if ("IntersectionObserver" in window) {
+          const lazyimage = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const outer = entry.target;
+                const img = outer.querySelector("img");
+                const src = img.getAttribute("lazy");
+                img.setAttribute("src", src);
+                lazyimage.unobserve(outer);
+              }
+            });
           });
-        });
 
-        // const makeCat = (cat) => {
-        //   const text = `
-        //     <div class="item">
-        //       <div class="img-outer">
-        //         <img lazy=${cat.url} alt=${cat.name} />
-        //       </div>
-        //       <h6 class="tooltip">${cat.name}</h6>
-        //     </div>
-        //   `;
-        //   return text;
-        // };
-
-        // this.$searchResult.innerHTML = this.data
-        //   .map((cat) => makeCat(cat))
-        //   .join("");
-        const makeCat = (cat, index) => {
-          const item = document.createElement("div");
-          item.innerHTML = `
-              <div class="img-outer">
-                <img lazy=${cat.url} alt=${cat.name} />
+          const makeCat = (cat) => {
+            const text = `
+              <div class="item">
+                <div class="img-outer">
+                  <img lazy=${cat.url} alt=${cat.name} id=${cat.id} />
+                </div>
+                <h6 class="tooltip">${cat.name}</h6>
               </div>
-              <h6 class="tooltip">${cat.name}</h6>
-          `;
-          const tooltip = item.querySelector(".tooltip");
-          item.addEventListener("mouseover", () => {
-            tooltip.classList.add("fade-in");
-            tooltip.classList.remove("fade-out");
-          });
-          item.addEventListener("mouseout", () => {
-            tooltip.classList.add("fade-out");
-            tooltip.classList.remove("fade-in");
-          });
-          item.addEventListener("click", () => {
-            this.onClick(this.data[index]);
-          });
-          lazyimage.observe(item);
-          this.$searchResult.appendChild(item);
-        };
-        this.data.forEach((cat, index) => makeCat(cat, index));
+            `;
+            return text;
+          };
 
-        // this.$searchResult.querySelectorAll(".item").forEach(($item, index) => {
-        //   $item.addEventListener("click", () => {
-        //     this.onClick(this.data[index]);
-        //   });
-        //   lazyimage.observe($item);
-        // });
+          this.$searchResult.innerHTML = this.data
+            .map((cat) => makeCat(cat))
+            .join("");
+
+          this.$searchResult.querySelectorAll(".item").forEach(($item) => {
+            const tooltip = $item.querySelector(".tooltip");
+
+            $item.addEventListener("mouseover", () => {
+              tooltip.classList.add("fade-in");
+              tooltip.classList.remove("fade-out");
+            });
+            $item.addEventListener("mouseout", () => {
+              tooltip.classList.add("fade-out");
+              tooltip.classList.remove("fade-in");
+            });
+            lazyimage.observe($item);
+          });
+        }
       }
     } else if (this.error) {
       this.$searchResult.innerHTML = `
